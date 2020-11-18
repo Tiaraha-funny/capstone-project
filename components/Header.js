@@ -1,17 +1,26 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { Contexts } from "../Context";
 
 function Header() {
-	return (
-		<header>
-			<Link to="/">
-			<h2>Pic Some</h2>
-			</Link>
-			<Link to="/cart">
-			<i className="ri-shopping-cart-line ri-fw ri-2x"></i>
-			</Link>
-		</header>
-	);
+  const { cartItems } = useContext(Contexts);
+
+  const cartClassName =
+	cartItems.length > 0 
+	? (
+      <i className="ri-shopping-cart-fill ri-fw ri-2x"></i>
+    ) : (
+      <i className="ri-shopping-cart-line ri-fw ri-2x"></i>
+    );
+
+  return (
+    <header>
+      <Link to="/">
+        <h2>Pic Some</h2>
+      </Link>
+      <Link to="/cart">{cartClassName}</Link>
+    </header>
+  );
 }
 
 export default Header;

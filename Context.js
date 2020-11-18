@@ -5,6 +5,7 @@ const API__PHOTOS = "https://raw.githubusercontent.com/bobziroll/scrimba-react-b
 
 function ContextProvider({children}) {
   const [allPhotos, setAllPhotos] = useState([]);
+  const [ cartItems, setCartItems ] = useState([]);
 
    const fetchPhotosFromApi = async () => {
     const res = await fetch(API__PHOTOS);
@@ -17,9 +18,33 @@ function ContextProvider({children}) {
     fetchPhotosFromApi();
   }, []);
 
+  function toggleFavorite(id) {
+    const newPhotos = allPhotos.map(photo => {
+      if(photo.id === id) {
+        return {
+          ...photo,
+          isFavorite: !photo.isFavorite
+        }
+      }
+
+      return photo
+    })
+    setAllPhotos(newPhotos);
+  }
+
+  function addToCart(image) {
+    // const newCartItems = [...cartItems, image];
+    // setCartItems(newCartItems)
+    setCartItems(prevItem => [...prevItem, image])
+    console.log(cartItems);
+    }
+
+    function removeImage(id) {
+      setCartItems(prevItems => prevItems.filter(image => image.id !== id));
+    }
 
   return (
-  <Contexts.Provider value={{allPhotos}}>
+  <Contexts.Provider value={{ allPhotos, toggleFavorite, cartItems, addToCart, removeImage }} >
     {children}
   </Contexts.Provider>);
 }

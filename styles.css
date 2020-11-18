@@ -13,6 +13,10 @@ body {
 	padding: 0;
 }
 
+.newCart {
+	width: 100%;
+}
+
 main.photos {
 	padding: 10px;
 	display: grid;
